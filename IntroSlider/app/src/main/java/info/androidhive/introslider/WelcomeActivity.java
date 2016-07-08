@@ -46,7 +46,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
 
-        viewPager = (ViewPager) findViewById(R.id.view_pager);
+        viewPager = (ViewPager) findViewById(R.id.viewpager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
         btnSkip = (Button) findViewById(R.id.btn_skip);
         btnNext = (Button) findViewById(R.id.btn_next);
