@@ -1,3 +1,6 @@
 <resources>
-    <string name="app_name">DownJoz</string>
+    <string name="app_name">دانجز</string>
+    <string name="first_tab">تازه ها</string>
+    <string name="second_tab">همه</string>
+    <string name="third_tab">باید بخوانم</string>
 </resources>
