@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_tvTitle"
+        style="?android:attr/textAppearanceMedium"
+        android:textColor="#000000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:ellipsize="start"
+        android:singleLine="true"
+        android:gravity="center_vertical|right"
+        android:layout_marginTop="6dip"
+        android:layout_marginBottom="9dip"
+        android:layout_marginStart="10dip"
+        android:layout_marginEnd="10dip"
+        android:minHeight="54dip"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="ifContentScrolls"
+        android:paddingBottom="12dip"
+        android:paddingLeft="14dip"
+        android:paddingRight="10dip"
+        android:paddingTop="2dip">
+
+        <TextView
+            android:gravity="right"
+            android:padding="5dip"
+            android:id="@+id/dialog_tvMessage"
+            style="?android:attr/textAppearanceSmall"
+            android:textColor="#000000"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+
+             />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:gravity="left"
+        android:padding="4dp">
+
+        <Button
+            android:id="@+id/dialog_btnPositive"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+        <Button
+            android:id="@+id/dialog_btnNegative"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end" />
+    </LinearLayout>
+
+</LinearLayout>

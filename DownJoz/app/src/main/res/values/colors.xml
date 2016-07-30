@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#9C27B0</color>
-    <color name="colorLightPrimary">#E1BEE7</color>
 
     <color name="colorPrimaryDark">#7B1FA2</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
-    <color name="colorDivider">#B6B6B6</color>
-    <color name="colorTextWhite">#ffffff</color>
-
-    <color name="whith">#a99999</color>
-    <color name="back_ground_slidingtab">#ffffff</color>
-    <color name="green$light">#020202</color>
-
-    <color name="back_ground">#f1f4f0</color>
-    <color name="textColor_important">#000000</color>
-    <color name="textColor_details">#555454</color>
 
 </resources>

@@ -1,7 +1,6 @@
 package com.vallco.downjoz;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,15 +10,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.vallco.downjoz.Fragments.AllData_Fr;
+import com.vallco.downjoz.Fragments.Favorite_Fr;
 import com.vallco.downjoz.Fragments.News_Fr;
-import com.vallco.downjoz.Fragments.ShouldRead_Fr;
 
-public class MainActivity extends AppCompatActivity implements  View.OnClickListener {
+import java.util.HashMap;
+import java.util.Map;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private int PAGE_COUNT;
     private final int SecondTab = 1;
@@ -32,6 +34,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     private Toolbar mToolbar;
     private TabLayout mTabLayout;
     private DrawerLayout mDrawerLayout;
+    private Map<Integer, String> mFragmentTags;
+    private FragmentManager mFragmentManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         prepareViewPager();
 
 
-        fragmentManager = getSupportFragmentManager();
+
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -51,16 +55,27 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
             @Override
             public void onPageSelected(int position) {
+                Fragment fragment;
                 switch (position) {
                     case 0:
-                        showToast("One");
+                        fragment = ((MyFragmentPagerAdapter) pager.getAdapter()).getFragment(position);
+                        if (fragment != null) {
+                            fragment.onResume();
+                        }
+
                         break;
                     case 1:
-
-
+                        fragment = ((MyFragmentPagerAdapter) pager.getAdapter()).getFragment(position);
+                        if (fragment != null) {
+                            fragment.onResume();
+                        }
                         break;
+
                     case 2:
-                        showToast("Three");
+                        fragment = ((MyFragmentPagerAdapter) pager.getAdapter()).getFragment(position);
+                        if (fragment != null) {
+                            fragment.onResume();
+                        }
 
                         break;
                 }
@@ -80,6 +95,8 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
     // *****************************************************************************************************************
 
     private void initBundle() {
+        fragmentManager = getSupportFragmentManager();
+        mFragmentTags = new HashMap<Integer, String>();
         tabTitles = new String[]{getString(R.string.first_tab), getString(R.string.second_tab), getString(R.string.third_tab)};
         currentTab = 1;
         PAGE_COUNT = 3;
@@ -128,16 +145,44 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                 mDrawerLayout.openDrawer(GravityCompat.END);
                 break;
             case R.id.toolbar_search:
-                showToast("toolbar_search");
+
                 break;
 
         }
     }
 
     private class MyFragmentPagerAdapter extends FragmentPagerAdapter {
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            Object obj = super.instantiateItem(container, position);
+            if (obj instanceof Fragment) {
+                //record the fragment tag here
+                Fragment fragment = (Fragment) obj;
+                String tag = fragment.getTag();
+                mFragmentTags.put(position, tag);
+            }
+            return obj;
+        }
+
+        public Fragment getFragment(int position) {
+            String tag = mFragmentTags.get(position);
+            if (tag == null) return null;
+            return mFragmentManager.findFragmentByTag(tag);
+
+        }
 
         public MyFragmentPagerAdapter(FragmentManager fm) {
             super(fm);
+            mFragmentManager = fm;
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            if (object instanceof AllData_Fr) {
+                ((AllData_Fr) object).loadJsonAllData();
+            }
+
+            return super.getItemPosition(object);
         }
 
         @Override
@@ -151,7 +196,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
                     return AllData_Fr.newInstance();
 
                 case ThirdTab:
-                    return ShouldRead_Fr.newInstance();
+                    return Favorite_Fr.newInstance();
 
                 default:
                     return null;
@@ -172,9 +217,6 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
         }
     }
 
-    void showToast(String msg) {
-        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
-    }
 
 
 }/*AppCompatActivity implements View.OnClickListener {
@@ -237,7 +279,7 @@ public class MainActivity extends AppCompatActivity implements  View.OnClickList
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.checkId()){
             case R.id.active_search_btn:
                 searchEvent(inputSearchText.getText().toString());
                 break;
