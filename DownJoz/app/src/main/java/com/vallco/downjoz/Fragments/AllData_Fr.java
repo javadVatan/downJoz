@@ -87,6 +87,7 @@ public class AllData_Fr extends Fragment implements ShowDialog.ConfirmationDialo
         mRecycler = (RecyclerView) currentView.findViewById(R.id.fr_all_data_recycler);
         mAdapter = new AllDataAdapter(mContext, dataList);
         mRecycler.setAdapter(mAdapter);
+        mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
 
     }

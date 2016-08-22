@@ -13,6 +13,6 @@
         <item name="colorAccent">@color/colorAccent</item>
         <!--title and message color-->
 
-
     </style>
+
 </resources>

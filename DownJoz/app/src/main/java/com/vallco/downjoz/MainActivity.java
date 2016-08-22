@@ -12,12 +12,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.Toast;
 
+import com.vallco.downjoz.Adapter.DrawerAdapter;
 import com.vallco.downjoz.Fragments.AllData_Fr;
 import com.vallco.downjoz.Fragments.Favorite_Fr;
 import com.vallco.downjoz.Fragments.News_Fr;
+import com.vallco.downjoz.utils.DrawerViewModel;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -36,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DrawerLayout mDrawerLayout;
     private Map<Integer, String> mFragmentTags;
     private FragmentManager mFragmentManager;
+    private ListView drawerList;
+    private DrawerAdapter drawerAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         initBundle();
         prepareViewPager();
-
+        initDrawer();
 
 
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -106,11 +112,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tabID[2] = ThirdTab;
     }
 
-    private void prepareViewPager() {
+    private void initDrawer() {
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerList = (ListView) findViewById(R.id.mainDrawerList);
+
+        ArrayList<DrawerViewModel> listData = new ArrayList<DrawerViewModel>();
+        int[] allIconDrawer = {R.drawable.ic_file_download_36dp, R.drawable.ic_book_black_36dp,
+                R.drawable.ic_help_36dp, R.drawable.ic_bug_report_36dp};
+
+        String[] allNameDrawer = {"دانلود", "کتاب های خریداری شده", "راهنما", "پشتیبانی"};
+
+        for (int i = 0; i < allIconDrawer.length; i++) {
+            DrawerViewModel drawerViewModel = new DrawerViewModel(allNameDrawer[i], allIconDrawer[i]);
+            listData.add(drawerViewModel);
+        }
+
+        DrawerAdapter.DrawerItemOnclick drawerOnclick = new DrawerAdapter.DrawerItemOnclick() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getApplicationContext(), position + "", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        drawerAdapter = new DrawerAdapter(this, drawerOnclick, listData);
+        drawerList.setAdapter(drawerAdapter);
+
+    }
+
+    private void prepareViewPager() {
+
         mTabLayout = (TabLayout) findViewById(R.id.tabanim_tabs);
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-
 
         /** Getting a reference to the ViewPager defined the layout file */
         pager = (ViewPager) findViewById(R.id.tabanim_viewpager);
@@ -136,6 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         mTabLayout.setupWithViewPager(pager);
 
     }
+
 
     @Override
     public void onClick(View v) {
@@ -216,7 +250,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return tabTitles[position];
         }
     }
-
 
 
 }/*AppCompatActivity implements View.OnClickListener {

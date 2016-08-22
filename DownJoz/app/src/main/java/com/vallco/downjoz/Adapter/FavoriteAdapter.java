@@ -55,9 +55,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
                 .into(holder.imagePoster_iv);
 
         if (dbHandler.checkId(dataFavorite.get(holder.getAdapterPosition()).getId())) {
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_black_24dp);
         } else {
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
         holder.icAddFavorite.setOnClickListener(this);
 
@@ -89,40 +89,17 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHo
     }
 
     public void manageFavorite(ViewHolder holder) {
-        Animation animation = AnimationUtils.loadAnimation(mContext,R.anim.fade_in);
         DbHandler dbHandler = new DbHandler(mContext);
+        dbHandler.openDataBase();
+        if (dbHandler.checkId(dataFavorite.get(holder.getAdapterPosition()).getId())) {
 
+            dbHandler.delete(dataFavorite.get(holder.getAdapterPosition()).getId());
+            dataFavorite.remove(holder.getAdapterPosition()).getId();
+            notifyItemRemoved(holder.getAdapterPosition());
 
-try {
-    dbHandler.openDataBase();
-    if (dbHandler.checkId(dataFavorite.get(holder.getAdapterPosition()).getId())) {
+            dbHandler.closeDataBase();
 
-        dbHandler.delete(dataFavorite.get(holder.getAdapterPosition()).getId());
-        dataFavorite.remove(holder.getAdapterPosition()).getId();
-        holder.itemView.startAnimation(animation);
-        animation.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                notifyDataSetChanged();
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-
-
-    }
-    dbHandler.closeDataBase();
-}catch (Exception   e){
-    Toast.makeText(mContext,e.toString(),Toast.LENGTH_LONG).show();
-}
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

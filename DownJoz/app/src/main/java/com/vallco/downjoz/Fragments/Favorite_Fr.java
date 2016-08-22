@@ -49,6 +49,7 @@ public class Favorite_Fr extends Fragment {
         dbHandler = new DbHandler(mContext);
         dataList = new ArrayList<ViewModel>();
         mRecycler = (RecyclerView) currentView.findViewById(R.id.frg_should_read_recycler);
+        mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(mContext));
     }
 

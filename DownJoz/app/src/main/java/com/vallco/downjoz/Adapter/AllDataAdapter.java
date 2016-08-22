@@ -53,9 +53,9 @@ public class AllDataAdapter extends RecyclerView.Adapter<AllDataAdapter.ViewHold
                 .into(holder.imagePoster_iv);
 
         if(dbHandler.checkId(dataList.get(holder.getAdapterPosition()).getId())){
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_black_24dp);
         }else {
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
         }
         holder.icAddFavorite.setOnClickListener(this);
 
@@ -141,13 +141,13 @@ public class AllDataAdapter extends RecyclerView.Adapter<AllDataAdapter.ViewHold
                     dataList.get(holder.getAdapterPosition()).getTypeVersion(),
                     dataList.get(holder.getAdapterPosition()).getImageUrl());
 
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_black_24dp);
 
         } else if (dbHandler.checkId(dataList.get(holder.getAdapterPosition()).getId())) {
 
             dbHandler.delete(dataList.get(holder.getAdapterPosition()).getId() ) ;
 
-            holder.icAddFavorite.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+            holder.icAddFavorite.setImageResource(R.drawable.ic_bookmark_border_black_24dp);
 
         }
         dbHandler.closeDataBase();
